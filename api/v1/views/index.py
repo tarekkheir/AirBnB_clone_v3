@@ -36,4 +36,3 @@ def stats():
         "users": models.storage.count(User)
     }
     return jsonify(obj)
-#[City] (34f95aab-4294-4243-b95e-c45768b9c294)
