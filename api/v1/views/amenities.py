@@ -18,7 +18,8 @@ def amenities():
     return(jsonify(obj))
 
 
-@app_views.route('/amenities/<id_amenitie>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<id_amenitie>',
+                 methods=['GET'], strict_slashes=False)
 def amenitie(id_amenitie):
     """ return (JSON) """
     amenities = storage.all(Amenity)
@@ -41,7 +42,8 @@ def amenitie_post():
     return jsonify(error='Missing name'), 400
 
 
-@app_views.route('/amenities/<amenitie_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenitie_id>',
+                 methods=['PUT'], strict_slashes=False)
 def amenitie_put(amenitie_id):
     """ API Put methode """
     content = request.get_json()
@@ -53,7 +55,9 @@ def amenitie_put(amenitie_id):
             return jsonify(value.to_dict()), 200
     return jsonify(error='Not Found'), 404
 
-@app_views.route('/amenities/<id_amenitie>', methods=['DELETE'], strict_slashes=False)
+
+@app_views.route('/amenities/<id_amenitie>',
+                 methods=['DELETE'], strict_slashes=False)
 def delete_amenity(id_amenitie):
     """ Function to return a amenitie informations """
     amenities = storage.all(Amenity)
