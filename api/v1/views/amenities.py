@@ -52,3 +52,14 @@ def amenitie_put(amenitie_id):
             value.save()
             return jsonify(value.to_dict()), 200
     return jsonify(error='Not Found'), 404
+
+@app_views.route('/amenities/<id_amenitie>', methods=['DELETE'], strict_slashes=False)
+def delete_amenity(id_amenitie):
+    """ Function to return a amenitie informations """
+    amenities = storage.all(amenitie)
+    for amenitie, value in amenities.items():
+        if value.id == id_amenitie:
+            storage.delete(value)
+            storage.save()
+            return jsonify({}), 200
+    return jsonify(error='Not found'), 404
