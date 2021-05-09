@@ -2,7 +2,7 @@
 """ Module on amenitie view """
 from api.v1.views import app_views
 from models import storage
-from models.amenitie import Amenity
+from models.amenity import Amenity
 from flask import jsonify, request
 
 
@@ -25,19 +25,6 @@ def amenitie(id_amenitie):
     for amenitie, value in amenities.items():
         if value.id == id_amenitie:
             return jsonify(value.to_dict())
-    return jsonify(error='Not found'), 404
-
-
-@app_views.route('/amenities/<id_amenitie>',
-                 methods=['DELETE'], strict_slashes=False)
-def delete(id_amenitie):
-    """ Function to return a amenitie informations """
-    amenities = storage.all(amenitie)
-    for amenitie, value in amenities.items():
-        if value.id == id_amenitie:
-            storage.delete(value)
-            storage.save()
-            return jsonify({}), 200
     return jsonify(error='Not found'), 404
 
 
