@@ -11,7 +11,7 @@ def amenities():
     """
         Function to return all amenitie informations
     """
-    amenities = storage.all(amenitie)
+    amenities = storage.all(Amenity)
     obj = []
     for amenitie, value in amenities.items():
         obj.append(value.to_dict())
@@ -21,7 +21,7 @@ def amenities():
 @app_views.route('/amenities/<id_amenitie>', methods=['GET'], strict_slashes=False)
 def amenitie(id_amenitie):
     """ return (JSON) """
-    amenities = storage.all(amenitie)
+    amenities = storage.all(Amenity)
     for amenitie, value in amenities.items():
         if value.id == id_amenitie:
             return jsonify(value.to_dict())
@@ -45,7 +45,7 @@ def amenitie_post():
 def amenitie_put(amenitie_id):
     """ API Put methode """
     content = request.get_json()
-    amenities = storage.all(amenitie)
+    amenities = storage.all(Amenity)
     for amenitie, value in amenities.items():
         if value.id == amenitie_id:
             value.name = content['name']
@@ -56,7 +56,7 @@ def amenitie_put(amenitie_id):
 @app_views.route('/amenities/<id_amenitie>', methods=['DELETE'], strict_slashes=False)
 def delete_amenity(id_amenitie):
     """ Function to return a amenitie informations """
-    amenities = storage.all(amenitie)
+    amenities = storage.all(Amenity)
     for amenitie, value in amenities.items():
         if value.id == id_amenitie:
             storage.delete(value)
