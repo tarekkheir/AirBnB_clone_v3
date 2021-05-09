@@ -2,7 +2,7 @@
 """ Module on place view """
 from api.v1.views import app_views
 from models import storage
-from models.amenity import Place
+from models.place import Place
 from flask import jsonify, request
 
 
@@ -30,7 +30,7 @@ def place(id_place):
 
 
 @app_views.route('/places', methods=['POST'], strict_slashes=False)
-def amenitie_post():
+def place_post():
     """ Method post """
     content = request.get_json()
     if request.is_json is False:
@@ -44,7 +44,7 @@ def amenitie_post():
 
 @app_views.route('/places/<id_place>',
                  methods=['PUT'], strict_slashes=False)
-def amenitie_put(place_id):
+def place_put(place_id):
     """ API Put methode """
     content = request.get_json()
     places = storage.all(Place)
@@ -58,7 +58,7 @@ def amenitie_put(place_id):
 
 @app_views.route('/places/<id_place>',
                  methods=['DELETE'], strict_slashes=False)
-def delete_amenity(id_place):
+def delete_place(id_place):
     """ Function to return a place informations """
     places = storage.all(Place)
     for place, value in places.items():
