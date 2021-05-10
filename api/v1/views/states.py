@@ -6,7 +6,7 @@ from models.state import State
 from flask import jsonify, request
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states():
     """
         Function to return all state informations
