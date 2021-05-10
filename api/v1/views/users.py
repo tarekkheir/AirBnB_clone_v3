@@ -13,10 +13,10 @@ def users_list():
     users = storage.all(User)
     obj = []
 
-    for user in users.items():
-        obj.append(user)
+    for user, value in users.items():
+        obj.append(value.to_dict())
 
-    return jsonify(obj.to_dict)
+    return jsonify(obj)
 
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
@@ -26,8 +26,7 @@ def user_obj(user_id):
 
     if users is None:
         abort(404)
-
-    return jsonify(users.to_dict)
+    return jsonify(users.to_dict())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
@@ -57,7 +56,7 @@ def user_create():
     user = User(len(body), **body)
     user.save()
 
-    return jsonify(user.to_dict), 201
+    return jsonify(user.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
