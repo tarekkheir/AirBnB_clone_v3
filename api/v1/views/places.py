@@ -92,3 +92,23 @@ def place_put(id_place):
             value.save()
             return jsonify(value.to_dict()), 200
     return jsonify(error='Not Found'), 404
+
+
+@app_views.route('/places_search',
+                 methods=['POST'], strict_slashes=False)
+def place_search():
+    "function to search items"
+    content = request.get_json()
+    places = storage.all(Place)
+    if request.is_json is False:
+        return jsonify(error='Not a JSON'), 400
+    bl = True
+    for e in content:
+        if e == 0:
+            bl = False
+    if content == "" or bl is False:
+        obj = []
+        for place, value in places.items():
+            obj.append(value.to_dict())
+        return jsonify(obj), 200
+    return jsonify(error='Not Found'), 404
