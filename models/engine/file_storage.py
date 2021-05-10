@@ -71,11 +71,11 @@ class FileStorage:
 
     def get(self, cls, id):
         """ A method to retrieve one object"""
-        try:
-            obj = self.__session.query(cls).filter(cls.id == id).first()
-            return obj
-        except:
+        if cls not in classes.values():
             return None
+
+        obj = '{}.{}'.format(cls.__name__, id)
+        self.__objects[obj]
 
     def count():
         """ A method to count the number of objects in storage """
