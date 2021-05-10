@@ -32,5 +32,5 @@ class User(BaseModel, Base):
             # m.update(pwd.encode("utf-8"))
             # pwd_hex = m.hexdigest()
             pwd = hashlib.md5(kwargs['password'].encode('utf-8')).hexdigest()
-            kwargs['password'] = pwd_hex
+            kwargs['password'] = pwd
         super().__init__(*args, **kwargs)
