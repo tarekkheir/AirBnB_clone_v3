@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     """ return 404 status code error if page not found """
@@ -30,4 +31,4 @@ if __name__ == '__main__':
         p = os.getenv('HBNB_API_PORT')
     else:
         p = '5000'
-    app.run(host=h, port=p, threaded=True, debug=True)
+    app.run(host=h, port=p, threaded=True)
