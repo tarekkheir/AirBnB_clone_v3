@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ new view for User object that handles all default RestFul API actions"""
 from api.v1.views import app_views
-from flask import Flask, abort, jsonify, request
+from flask import Flask, abort, jsonify, request, make_response
 from models import storage
 from models.user import User
 
