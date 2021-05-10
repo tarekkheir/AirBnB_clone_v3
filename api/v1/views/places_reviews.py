@@ -4,7 +4,7 @@ all default RestFul API actions"""
 from api.v1.views import app_views
 from flask import Flask, abort, jsonify, request
 from models import storage
-from models.reviews import Review
+from models.review import Review
 from models.place import Place
 
 
