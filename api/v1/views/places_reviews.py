@@ -65,21 +65,34 @@ def review_post(place_id):
     if 'text' not in request.json:
         return make_response(jsonify({'error': 'Missing text'}), 400)
 
+    body = get_json()
+    user = storage.get(User, body.get("user_id"))
+
+    if user is None:
+        abort(404)
+
+    body['place_id'] = place_id
+    obj = Review(len(body), **body)
+    obj.save()
+    return jsonify(obj.to_dict()), 201
+
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'], strict_slashes=False)
-def review_put(city_id):
+def review_put(review_id):
     """ API Put methode """
-    city = storage.get(City, city_id)
+    review = storage.get(Review, review_id)
 
-    if city is None:
+    if review is None:
         abort(404)
 
     if not request.json:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     body = request.get_json()
+    ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
 
-    body['name'] = city.name
-    city.save()
-
-    return jsonify(city.to_dict()), 200
+    for key, value in body.items():
+        if key not in ignored:
+            setattr(obj, key, value)
+    obj.save()
+    return jsonify(obj.to_dict()), 200

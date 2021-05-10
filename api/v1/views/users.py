@@ -71,8 +71,10 @@ def user_put(user_id):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     body = request.get_json()
-    body['email'] = user.email
-    body['password'] = user.password
-    user.save()
+    ignore_keys = ['id', 'created_at', 'updated_at']
 
-    return jsonify(user.to_dict()), 200
+    for key, value in body.items():
+        if key not in ignore_keys:
+            setattr(obj, key, value)
+    obj.save()
+    return jsonify(obj.to_dict()), 200
