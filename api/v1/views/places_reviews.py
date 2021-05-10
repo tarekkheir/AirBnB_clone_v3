@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" Create a new view for Review object that handles all default RestFul API actions"""
+""" Create a new view for Review object that handles
+all default RestFul API actions"""
 from api.v1.views import app_views
 from flask import Flask, abort, jsonify, request
 from models import storage
@@ -22,7 +23,6 @@ def review_list(place_id):
                     reviews.append(r.to_dict())
             return jsonify(reviews)
     abort(404)
-
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET'], strict_slashes=False)
