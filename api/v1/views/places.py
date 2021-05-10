@@ -7,7 +7,8 @@ from models.city import City
 from flask import jsonify, request
 
 
-@app_views.route('/cities/<city_id>/places', methods=['GET'])
+@app_views.route('/cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 def places(city_id):
     """ Function to return all place informations """
     cities = storage.all(City)
