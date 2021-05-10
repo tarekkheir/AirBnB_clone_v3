@@ -9,7 +9,7 @@ from flask import jsonify, request
 
 
 @app_views.route('/states/<state_id>/cities', methods=['GET'], strict_slashes=False)
-def state(state_id):
+def city(state_id):
     """ return (JSON) """
     states = storage.all(State)
     obj = []
@@ -19,7 +19,7 @@ def state(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
-def states(city_id):
+def cities(city_id):
     """
         Function to return all cities informations
     """
@@ -44,7 +44,7 @@ def delete(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
-def state_post():
+def city_post():
     """ Method post """
     content = request.get_json()
     if not request.json:
@@ -58,7 +58,7 @@ def state_post():
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
-def state_put(city_id):
+def city_put(city_id):
     """ API Put methode """
     content = request.get_json()
     cities = storage.all(City)
