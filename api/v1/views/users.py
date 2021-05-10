@@ -9,6 +9,7 @@ from models.user import User
 @app_views.route('/users',
                  methods=['GET'], strict_slashes=False)
 def users_list():
+    """ Retrieves the list of all User objects"""
     users = storage.all(User)
     obj = []
 
@@ -20,6 +21,7 @@ def users_list():
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def user_obj(user_id):
+    """ Retrieves a User object"""
     users = storage.get(User, user_id)
 
     if users is None:
@@ -30,6 +32,7 @@ def user_obj(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def user_delete(user_id):
+    """ Deletes a User object"""
     user = storage.get(User, user_id)
 
     if user is None:
@@ -42,6 +45,7 @@ def user_delete(user_id):
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def user_create():
+    """ Creates a User"""
     if not request.json:
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if 'email' not in request.json:
@@ -58,6 +62,7 @@ def user_create():
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def user_put(user_id):
+    """ Updates a User object"""
     user = storage.get(user, user_id)
 
     if user is None:
