@@ -17,7 +17,7 @@ def places(city_id):
         if value.id == city_id:
             for place in value.places:
                 obj.append(place.to_dict())
-                return jsonify(obj)
+            return jsonify(obj)
     return jsonify(error='Not found'), 404
 
 
