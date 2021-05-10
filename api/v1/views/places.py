@@ -3,17 +3,21 @@
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
+from models.place import City
 from flask import jsonify, request
 
 
-@app_views.route('/places', methods=['GET'])
-def places():
+@app_views.route('/cities/<city_id>/places', methods=['GET'])
+def places(city_id):
     """ Function to return all place informations """
-    places = storage.all(Place)
+    cities = storage.all(City)
     obj = []
-    for place, value in places.items():
-        obj.append(value.to_dict())
-    return(jsonify(obj))
+    for city, value in cities.items():
+        if value.id == city_id:
+            for place in value.places:
+                obj.append(place.to_dict())
+                return jsonify(place)
+    return jsonify(error='Not found'), 404
 
 
 @app_views.route('/places/<id_place>',
@@ -24,6 +28,19 @@ def place(id_place):
     for place, value in places.items():
         if value.id == id_place:
             return jsonify(value.to_dict())
+    return jsonify(error='Not found'), 404
+
+
+@app_views.route('/places/<id_place>',
+                 methods=['DELETE'], strict_slashes=False)
+def delete_place(id_place):
+    """ Function to return a place informations """
+    places = storage.all(Place)
+    for place, value in places.items():
+        if value.id == id_place:
+            storage.delete(value)
+            storage.save()
+            return jsonify({}), 200
     return jsonify(error='Not found'), 404
 
 
@@ -39,7 +56,7 @@ def place_post(city_id):
     for city, value in cities.items():
         if value.id == city_id:
             is_city = True
-    if is_city == False:
+    if is_city is False:
         return jsonify(error="Not found"), 404
     if request.is_json is False:
         return jsonify(error='Not a JSON'), 400
@@ -52,12 +69,13 @@ def place_post(city_id):
     for user, value in users.items():
         if value.id == content['user_id']:
             is_user = True
-    if is_user == False:
+    if is_user is False:
         return jsonify(error="Not found"), 404
     place = Place(name=content['name'], user_id=content['user_id'],
                   city_id=city_id)
     place.save()
     return jsonify(place.to_dict()), 201
+
 
 @app_views.route('/places/<id_place>',
                  methods=['PUT'], strict_slashes=False)
@@ -73,15 +91,3 @@ def place_put(id_place):
             value.save()
             return jsonify(value.to_dict()), 200
     return jsonify(error='Not Found'), 404
-
-@app_views.route('/places/<id_place>',
-                 methods=['DELETE'], strict_slashes=False)
-def delete_place(id_place):
-    """ Function to return a place informations """
-    places = storage.all(Place)
-    for place, value in places.items():
-        if value.id == id_place:
-            storage.delete(value)
-            storage.save()
-            return jsonify({}), 200
-    return jsonify(error='Not found'), 404

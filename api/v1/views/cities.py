@@ -16,7 +16,7 @@ def city(state_id):
         obj = []
         for city in states.cities:
             obj.append(city.to_dict())
-            return jsonify(obj)
+        return jsonify(obj)
     abort(404)
 
 
